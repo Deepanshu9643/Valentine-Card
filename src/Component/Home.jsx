@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const FallingFlower = ({ delay }) => {
-  const randomFlower = ["🌸", "🌹", "💮", "🌺", "🌷", "💝", "💖"][Math.floor(Math.random() * 7)];
-  const randomLeft = Math.random() * 100;
-  const randomDuration = 6 + Math.random() * 4;
-  const randomSwing = 40 + Math.random() * 60;
-
-  return (
-    <div 
-      className="absolute animate-fall"
-      style={{
-        left: `${randomLeft}%`,
-        animationDelay: `${delay}s`,
-        animationDuration: `${randomDuration}s`,
-        fontSize: `${Math.random() * 10 + 14}px`,
-        transform: `translateX(${Math.sin(Date.now() * 0.001) * randomSwing}px)`,
-      }}
-    >
-      {randomFlower}
-    </div>
-  );
-};
+const FallingFlower = () => {
+    const randomFlower = ["🌸", "🌹", "💮", "🌺", "🌷", "💝", "💖"][Math.floor(Math.random() * 7)];
+    const randomLeft = Math.random() * 100; // Random position on the screen
+    const randomTop = Math.random() * 100; // Random vertical position
+    const randomSize = Math.random() * 10 + 14; // Random font size
+    const randomDuration = 4 + Math.random() * 6; // Random movement speed
+  
+    return (
+      <div
+        className="absolute animate-roam"
+        style={{
+          left: `${randomLeft}vw`,
+          top: `${randomTop}vh`,
+          fontSize: `${randomSize}px`,
+          animationDuration: `${randomDuration}s`,
+        }}
+      >
+        {randomFlower}
+      </div>
+    );
+  };
+  
 
 const Home = () => {
   const [yourName, setYourName] = useState("");
@@ -126,46 +127,26 @@ const Home = () => {
 };
 
 const styles = `
-@keyframes fall {
+@keyframes roam {
   0% {
-    transform: translateY(-10vh) rotate(0deg);
-    opacity: 1;
+    transform: translate(0, 0);
   }
-  85% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh) rotate(720deg);
-    opacity: 0;
-  }
-}
-
-@keyframes sway {
-  0%, 100% {
-    transform: translateX(0);
+  25% {
+    transform: translate(50px, 30px);
   }
   50% {
-    transform: translateX(100px);
+    transform: translate(-40px, -50px);
+  }
+  75% {
+    transform: translate(30px, -20px);
+  }
+  100% {
+    transform: translate(0, 0);
   }
 }
 
-.animate-fall {
-  animation: fall linear forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 1s ease-in forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.animate-roam {
+  animation: roam infinite alternate ease-in-out;
 }
 `;
 
@@ -175,5 +156,3 @@ if (typeof document !== 'undefined') {
   styleSheet.textContent = styles;
   document.head.appendChild(styleSheet);
 }
-
-export default Home;
