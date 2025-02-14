@@ -156,3 +156,5 @@ if (typeof document !== 'undefined') {
   styleSheet.textContent = styles;
   document.head.appendChild(styleSheet);
 }
+
+export default Home
